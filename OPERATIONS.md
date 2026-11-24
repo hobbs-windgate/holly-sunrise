@@ -192,14 +192,22 @@ Cloudflare 后台 → Workers & Pages → `holly-sunrise` → **Deployments** �
 
 这三件事做完，站点才算真正"可被发现"。都是免费的，各 5 分钟。
 
-### 7.1 Google Search Console（最重要）
+### 7.1 Google Search Console（最重要的已做）
 
-1. 打开 https://search.google.com/search-console → 添加资源 → **网址前缀** → 填 `https://holly-sunrise.pages.dev/`
-2. 验证方式选 **HTML 标记**，复制那串 `<meta name="google-site-verification" content="...">`
-3. 打开 `layouts/_partials/extend_head.html`，找到第 2 节（有一段被注释掉的 `<meta>`），取消注释并替换成你的串
-4. `git add -A; git commit -m "config: 添加 Google 验证"; git push`，等部署完成
-5. 回 Search Console 点「验证」
-6. 验证通过后 → 左侧 **Sitemaps** → 提交 `sitemap.xml`
+**验证文件方式**（已完成）：Google 给的验证文件放在 `static/googleXXXXXXXX.html`，
+Hugo 会原样复制到站点根目录。当前状态：
+
+- 线上地址：`https://holly-sunrise.pages.dev/google130934422994ceb1.html` → **200**
+- 回 Search Console 点「验证」即可通过
+- 验证通过后 → 左侧 **Sitemaps** → 填入 `sitemap.xml` → Submit
+
+> **`static/_redirects` 这个文件不能删。** Cloudflare Pages 会自动把
+> `/*.html` 以 308 重定向到无后缀路径，而 Google 的文件验证要求原 URL 直接
+> 返回 200 + 文件内容。`_redirects` 里那条 `200` 重写规则就是用来抵消这个
+> 行为的。删掉它，验证会在下次 Google 复检时失败。
+>
+> 以后若还用**HTML 标记**方式（`<meta>`）：改 `layouts/_partials/extend_head.html`
+> 第 2 节，取消注释并填入，push 后回 Search Console 验证。
 
 ### 7.2 Bing Webmaster Tools
 
