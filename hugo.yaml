@@ -32,7 +32,9 @@ outputs:
 taxonomies:
   category: categories
   tag: tags
-  series: series
+  # 系列（series）暂时关闭：没有文章用到它，/series/ 会是一个空的孤儿页面，
+  # 提交给搜索引擎只是浪费抓取预算。要启用时把下面一行加回来即可：
+  # series: series
 
 markup:
   goldmark:

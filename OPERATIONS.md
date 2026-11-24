@@ -225,6 +225,21 @@ Cloudflare 后台 → **Analytics & Logs → Web Analytics** → 添加站点 `h
 2. 打开 https://giscus.app，填入仓库名，拿到 `repo-id` 和 `category-id`
 3. 填进 `hugo.yaml` 的 `params.giscus`，把 `comments` 改成 `true`
 
+### 7.5 已经做过的 SEO 精修（别改回去）
+
+| 处理 | 位置 | 原因 |
+|---|---|---|
+| 搜索页 `robotsNoIndex: true` + `build.list: never` | `content/*/search.md` | 站内搜索结果页属于低质重复内容，被索引会拉低整站质量评分。同时把它从 sitemap 移除 |
+| 关闭 `series` 分类法 | `hugo.yaml` → `taxonomies` | 没有文章用到，`/series/` 是没有任何入口的空页。要启用把注释行加回来 |
+| 补 `safari-pinned-tab.svg` | `static/` | 主题 `head.html:92` 默认引用，缺失会 404 |
+
+**注意**：`build.list: never` 里用的是 **`build`** 而不是 `_build`。Hugo 0.145 起 `_build` 被
+移除，写成 `_build` 会直接构建失败（不是警告）。
+
+**关于标签页**：现在每个标签页平均只有 1 篇文章，属于薄内容。没有对它们做 noindex，
+因为标签页有真实的文章列表和内部链接价值。等文章多了（每个标签 ≥3 篇）这个比例自然
+变健康；如果一半年后仍只有十几篇，再考虑给单篇标签页加 `robotsNoIndex`。
+
 ---
 
 ## 8. 三条铁律
