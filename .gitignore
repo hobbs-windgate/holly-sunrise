@@ -3,6 +3,9 @@ public/
 resources/_gen/
 .hugo_build.lock
 
+# build.sh 在云端下载的 Hugo 二进制（不进仓库）
+.hugo-bin/
+
 # 系统 / 编辑器
 .DS_Store
 Thumbs.db

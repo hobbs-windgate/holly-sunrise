@@ -74,13 +74,16 @@ Dashboard → Workers & Pages → Create → Pages → **Connect to Git** → �
 | 配置项 | 值 |
 |---|---|
 | Framework preset | Hugo |
-| Build command | `hugo --gc --minify` |
+| Build command | `bash build.sh` |
 | Build output directory | `public` |
-| 环境变量 `HUGO_VERSION` | `0.170.1` |
 
 主题是内嵌的普通文件，所以**不需要** `git submodule` 那一步 —— 构建容器直接就能读到 `themes/PaperMod/`。
 
-`HUGO_VERSION` 别漏：平台 v3 镜像默认是 **0.147.7**，而本地是 0.170.1。不锁版本，同一份代码在本地和线上可能产出不同结果。如果构建日志报「需要 extended 版」，把值改成 `extended_0.170.1` 再重试。
+**为什么构建命令不是 `hugo --gc --minify`：** Pages 构建镜像默认自带 Hugo **0.147.7**，而 PaperMod 要求 **≥ 0.158**，直接构建会报 `not compatible with this Hugo version` 并在 baseof.html 第 12 行崩掉。
+
+官方解法是加环境变量 `HUGO_VERSION`，但那个变量存在两种状态：设置成功、以及“看起来设置成功但构建仍在用默认版本”（后者只会在日志里留一句 0.147.7，没有任何提示）。`build.sh` 把这件事变确定：**自己在构建时下载指定版本的 Hugo Extended 再构建**，镜像里装的是哪个版本都无所谓。
+
+想换版本改 `build.sh` 第 22 行，或者照旧设 `HUGO_VERSION` 环境变量（脚本会优先读它，并兼容 `extended_0.170.1` / `v0.170.1` 两种写法）。
 
 ### 3.3 首次上线后
 
