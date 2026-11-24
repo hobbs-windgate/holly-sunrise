@@ -17,9 +17,11 @@ defaultContentLanguageInSubdir: false
 
 enableRobotsTXT: true
 enableEmoji: true
-# 中英混排，关闭 CJK 分词以保持英文摘要行为一致
-hasCJKLanguage: false
-summaryLength: 30
+# 中英混排：必须开启 CJK 分词，否则中文的「字数 / 阅读时间」按空格切词会严重偏小
+# （实测同一篇中文文章，关闭时显示 274 字，实际 1373 字）
+hasCJKLanguage: true
+# 摘要长度：开启 CJK 后中文按字计，70 字约两行，比较合适
+summaryLength: 70
 
 pagination:
   pagerSize: 8
