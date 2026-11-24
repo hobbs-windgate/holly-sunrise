@@ -1,0 +1,40 @@
+{{- /* 覆盖 PaperMod 的 layouts/_partials/extend_head.html
+   注意：Hugo 0.146+ 使用带下划线的 _partials 目录，
+   放在 layouts/partials/ 下不会生效。
+
+   重要：主题的 head.html 已经自带
+     · hreflang（按 .Lang 输出，见 head.html:101）
+     · 完整 JSON-LD（BreadcrumbList / BlogPosting / Organization，见 templates/schema_json.html）
+   所以这里【不再重复输出】，只补主题缺的部分：
+     · x-default（主题没有，多语言站点建议有）
+     · 搜索引擎验证 meta
+     · 统计代码位
+   重复输出 hreflang 或结构化数据会被搜索引擎判定为冲突标注。
+*/ -}}
+
+{{- /* ===== 1. x-default：主题只输出语言版本，缺 x-default ===== */ -}}
+{{- if .IsTranslated -}}
+{{- $defaultLang := site.Params.defaultLang | default "en" -}}
+{{- $xdefault := "" -}}
+{{- range .AllTranslations -}}
+  {{- if eq .Lang $defaultLang }}{{ $xdefault = .Permalink }}{{ end -}}
+{{- end -}}
+{{- with $xdefault }}
+<link rel="alternate" hreflang="x-default" href="{{ . }}">
+{{- end }}
+{{- end }}
+
+{{- /* ===== 2. 搜索引擎所有权验证 =====
+   拿到验证串后取消注释并填入。
+   Google: https://search.google.com/search-console
+   Bing  : https://www.bing.com/webmasters
+<meta name="google-site-verification" content="REPLACE_ME">
+<meta name="msvalidate.01" content="REPLACE_ME">
+*/ -}}
+
+{{- /* ===== 3. Cloudflare Web Analytics（免费、无 cookie）
+   在 Cloudflare 后台 → Web Analytics 建站点后拿到 token，
+   取消注释并填入即可；不需要用户同意 cookie。
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token": "REPLACE_ME"}'></script>
+*/ -}}

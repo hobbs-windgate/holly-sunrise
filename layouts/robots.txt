@@ -1,0 +1,19 @@
+User-agent: *
+Disallow:
+Allow: /
+
+# 显式放行主流爬虫（部分镜像站默认屏蔽百度/必应，写清楚更稳）
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# AI 搜索爬虫：是否放行自行决定，放行有助于被 AI 搜索引用
+User-agent: GPTBot
+Allow: /
+
+Sitemap: {{ "sitemap.xml" | absURL }}

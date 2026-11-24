@@ -1,0 +1,46 @@
+/* ============================================================
+   PaperMod 自定义样式（主题会自动加载本文件）
+   只做最小干预，避免破坏主题暗色模式
+   ============================================================ */
+
+/* 中英混排：优先系统 CJK 字体，避免思源/微软雅黑导致的行高跳动 */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 正文阅读宽度：默认偏窄，英文长句在 720px 左右最舒服 */
+.post-content {
+  line-height: 1.75;
+}
+
+/* 中文段落行高略松，纯英文段落不受影响 */
+.post-content p {
+  margin-bottom: 1.1em;
+}
+
+/* 行内代码不抢视觉 */
+.post-content code:not(pre code) {
+  font-size: 0.9em;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+}
+
+/* 引用块：用于标注「本文为骨架/待补」这类状态说明 */
+.post-content blockquote {
+  border-inline-start: 3px solid var(--primary);
+  opacity: 0.9;
+}
+
+/* 表格在窄屏可横向滚动，避免撑破布局 */
+.post-content table {
+  display: block;
+  overflow-x: auto;
+}
+
+/* 文章列表标题字重收一点，长英文标题更好读 */
+.entry-header h2 {
+  font-weight: 600;
+}

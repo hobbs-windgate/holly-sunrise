@@ -1,0 +1,11 @@
+# 统一换行符：避免 Windows 提交的 CRLF 在每个文件的 diff 里制造噪音
+* text=auto eol=lf
+
+# 二进制文件不做换行转换
+*.png binary
+*.ico binary
+*.jpg binary
+*.woff2 binary
+
+# 主题目录是第三方代码，标记出来便于以后 diff 时排除
+themes/PaperMod/** linguist-vendored

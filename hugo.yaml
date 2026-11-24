@@ -1,0 +1,202 @@
+# ============================================================
+#  Hugo + PaperMod  ·  双语博客配置
+#  需要 Hugo Extended >= 0.146
+#  上线前全局搜索 REPLACE_ME 逐项替换
+# ============================================================
+
+# Cloudflare Pages 项目名必须是 holly-sunrise，这个地址才会生效
+# 以后绑定自有域名时只改这一行 + 重新部署即可
+baseURL: "https://holly-sunrise.pages.dev/"
+title: "Holly Sunrise — Code, Craft & Life"
+theme: ["PaperMod"]
+
+# 默认语言 = 英文（面向海外/技术圈）
+defaultContentLanguage: "en"
+# false 时英文在根路径 /，中文在 /zh/，无需额外跳转页
+defaultContentLanguageInSubdir: false
+
+enableRobotsTXT: true
+enableEmoji: true
+# 中英混排，关闭 CJK 分词以保持英文摘要行为一致
+hasCJKLanguage: false
+summaryLength: 30
+
+pagination:
+  pagerSize: 8
+
+# ---------- 输出格式：home 必须含 JSON，站内搜索依赖它 ----------
+outputs:
+  home: ["HTML", "RSS", "JSON"]
+  section: ["HTML", "RSS"]
+
+taxonomies:
+  category: categories
+  tag: tags
+  series: series
+
+markup:
+  goldmark:
+    renderer:
+      # 允许正文里写原始 HTML（嵌入视频、iframe 时需要）
+      unsafe: true
+    extensions:
+      typographer: true
+  highlight:
+    noClasses: false
+    codeFences: true
+    guessSyntax: true
+    lineNos: false
+    style: "monokai"
+  tableOfContents:
+    startLevel: 2
+    endLevel: 4
+
+# ---------- 语言 ----------
+languages:
+  en:
+    contentDir: "content/en"
+    # label/locale/direction 是 Hugo 0.158+ 的新键名
+    # 旧的 languageName/languageCode/languageDirection 已废弃
+    label: "English"
+    locale: "en-US"
+    direction: "ltr"
+    weight: 1
+    title: "Holly Sunrise — Code, Craft & Life"
+    params:
+      # 供 hreflang 使用，显式声明避免依赖 Hugo 版本差异
+      hreflang: "en"
+      description: "Field notes on software engineering, trade-offs I got wrong, and the occasional life update. Written in English and Chinese."
+      DateFormat: "Jan 2, 2006"
+      homeInfoParams:
+        Title: "Hi, I'm Gao 👋"
+        Content: >
+          I write about the messy middle of software engineering — the debugging
+          sessions nobody blogs about, the trade-offs I got wrong, and
+          occasionally what all of it does to a person.
+          This is **Holly Sunrise**: holly stays green through winter, sunrise is
+          the daily reset. Bilingual: **English** and **中文**.
+    menu:
+      main:
+        - identifier: posts
+          name: Posts
+          pageRef: /posts
+          weight: 10
+        - identifier: tags
+          name: Tags
+          pageRef: /tags
+          weight: 20
+        - identifier: search
+          name: Search
+          pageRef: /search
+          weight: 30
+        - identifier: about
+          name: About
+          pageRef: /about
+          weight: 40
+
+  zh:
+    contentDir: "content/zh"
+    label: "中文"
+    locale: "zh-CN"
+    direction: "ltr"
+    weight: 2
+    title: "Holly Sunrise — 技术与生活笔记"
+    params:
+      hreflang: "zh-CN"
+      description: "记录技术实践中的真实经验、踩过的坑，以及偶尔的人生随笔。中英双语。"
+      DateFormat: "2006年1月2日"
+      homeInfoParams:
+        Title: "我是老高 👋"
+        # 中文写成一行：YAML 折行会在句间插入空格，中文排版会显得松散
+        Content: >
+          写软件工程里那些没人体贴的中间地带——没人写博客的排查过程、判断错了的取舍，以及这些事对一个人意味着什么。这个站叫 **Holly Sunrise**：冬青在冬天还是绿的，日出是每天重来一次。双语写作：**English** 与**中文**。
+    menu:
+      main:
+        - identifier: posts
+          name: 文章
+          pageRef: /posts
+          weight: 10
+        - identifier: tags
+          name: 标签
+          pageRef: /tags
+          weight: 20
+        - identifier: search
+          name: 搜索
+          pageRef: /search
+          weight: 30
+        - identifier: about
+          name: 关于
+          pageRef: /about
+          weight: 40
+
+# ---------- 全站参数（两种语言共用） ----------
+params:
+  env: "production"
+  # hreflang 的 x-default 指向哪个语言（需与 defaultContentLanguage 一致）
+  defaultLang: "en"
+  title: "Holly Sunrise"
+  description: "Field notes on software engineering and life."
+  keywords: ["software engineering", "hugo blog", "indie developer", "technical writing"]
+  author: "Gao"
+  DateFormat: "Jan 2, 2006"
+  defaultTheme: "auto"
+  disableThemeToggle: false
+
+  # 文章页元素
+  ShowReadingTime: true
+  ShowWordCount: true
+  ShowShareButtons: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowRssButtonInSectionTermList: true
+  ShowAllPagesInArchive: true
+  ShowFullTextinRSS: true
+  ShowToc: true
+  TocOpen: false
+  hideAuthor: false
+
+  mainSections: ["posts"]
+
+  # 社交图标（改成你自己的链接）
+  # LinkedIn / Email 待补：先在 about.md 里写好，再回来加
+  socialIcons:
+    - name: github
+      url: "https://github.com/hobbs-windgate"
+    - name: rss
+      url: "/index.xml"
+
+  # ---------- 评论：Giscus（基于 GitHub Discussions，免费） ----------
+  # 文档：https://giscus.app  填完后把 comments 改回 true
+  comments: false
+  giscus:
+    repo: "REPLACE_ME/REPLACE_ME-comments"
+    repoId: "REPLACE_ME_REPO_ID"
+    category: "Announcements"
+    categoryId: "REPLACE_ME_CATEGORY_ID"
+    mapping: "pathname"
+    strict: "0"
+    reactionsEnabled: "1"
+    emitMetadata: "0"
+    inputPosition: "top"
+    theme: "preferred_color_scheme"
+    lang: "en"
+
+  # 站内搜索（Fuse.js 参数，词条少可保持默认）
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    keys: ["title", "permalink", "summary", "content"]
+
+  # 静态资源
+  assets:
+    disableHLJS: true
+    disableFingerprinting: false
+    favicon: "/favicon.ico"
+    favicon16x16: "/favicon-16x16.png"
+    favicon32x32: "/favicon-32x32.png"
+    apple_touch_icon: "/apple-touch-icon.png"
