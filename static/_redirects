@@ -1,0 +1,4 @@
+# Cloudflare Pages 会把 /*.html 308 重定向到无后缀路径。
+# Google Search Console 的 HTML 文件验证要求原 URL 直接返回 200 + 文件内容，
+# 这里用 200 状态做「重写」，绕过那个自动重定向。
+/google130934422994ceb1.html  /google130934422994ceb1  200
