@@ -54,19 +54,18 @@ hugo server -D
 
 ## 3. 部署到 Cloudflare Pages（零成本）
 
-### 3.1 推上 GitHub
+### 3.1 推上 GitHub（已完成）
 
-仓库已经 `git init` 且**首次提交已完成**（分支 `main`，151 个文件）。剩下的是建远端并推送 —— 在**你自己的 PowerShell** 里跑（这一步必须在能访问 github.com 的网络里做）：
+仓库已推送到 **https://github.com/hobbs-windgate/holly-sunrise**（public，1 个初始提交，151 个文件，`main` 跟踪 `origin/main`）。
 
 ```powershell
 cd D:\Workbuddy\2026-11-24-12-19-52\blog
-gh auth login --hostname github.com --git-protocol https --web --scopes repo
-gh repo create holly-sunrise --public --source=. --remote=origin --push
+git add -A
+git commit -m "post: 文章标题"
+git push
 ```
 
-第二条命令会建仓库、绑好 `origin`、推送 `main`，一步到位。仓库名**必须是 `holly-sunrise`**，它决定 `xxx.pages.dev` 地址，和 `hugo.yaml` 里的 `baseURL` 绑死。
-
-> 没装 `gh`？`winget install GitHub.cli`，然后**重开一个终端**（PATH 才会生效）。
+> **这台机器上的网络注意**：`github.com` 走代理时是**间歇性**放行的 —— `git push` 会时好时坏（`CONNECT tunnel failed, response 502`）。可以先 `git fetch` 试探，通了再 push；连续失败就过一会儿重试，不要反复重装认证。`gh auth` 只需授权一次，凭证存在 Windows 凭据管理器里。
 
 ### 3.2 Cloudflare Pages 建项目
 
