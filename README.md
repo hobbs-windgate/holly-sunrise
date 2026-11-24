@@ -3,7 +3,9 @@
 Hugo + PaperMod 双语博客。英文为默认语言（根路径 `/`），中文在 `/zh/`。
 面向海外 / 技术圈读者，托管成本 0 元。
 
-- 线上地址（建成后）：`https://holly-sunrise.pages.dev/`
+- 线上地址：`https://holly-sunrise.pages.dev/`
+- **日常写作与发布请看 → [OPERATIONS.md](OPERATIONS.md)（操作手册）**
+- 本 README 记录的是「站点是怎么搭起来的」，部署与日常操作以操作手册为准。
 - Cloudflare Pages 的**项目名必须填 `holly-sunrise`**，否则 `baseURL` 与实际地址不一致，sitemap 和 RSS 里的链接会全错。
 
 ---
