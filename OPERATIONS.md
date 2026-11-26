@@ -21,8 +21,8 @@
 | `content/{zh,en}/about.md` | 关于页（现在是《三次改签》） | ✅ 可以改 |
 | `content/{zh,en}/search.md` | 站内搜索页 | ⚠️ 只改文案，别删（搜索依赖它） |
 | `hugo.yaml` | 全站配置（站点名、菜单、社交链接） | ✅ 可以改，改完本地先预览 |
-| `assets/images/avatar.jpg` | 首页头像（正方形，构建时缩到 192px） | ✅ 换图直接用同名覆盖 |
-| `static/images/portrait.jpg` | 关于页的竖版肖像 | ✅ 换图直接用同名覆盖 |
+| `hugo.yaml` → `avatar` | 首页头像（图床直链，两种语言各一处） | ✅ 换图只改 URL |
+| `content/{zh,en}/about.md` 开头 | 关于页肖像（图床直链） | ✅ 换图只改 `<img src>` |
 | `assets/css/extended/engage.css` | 头像、阅读量、评论区样式 | ✅ 可以改 |
 | `static/js/engage.js` | 阅读量与评论区的前端逻辑 | ⚠️ 能改，但改完要本地测 |
 | `functions/api/[[path]].js` | 阅读量/评论的后端接口 | ⚠️ 能改，改完要本地测 |

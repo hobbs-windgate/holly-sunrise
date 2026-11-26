@@ -73,8 +73,8 @@ languages:
       DateFormat: "Jan 2, 2006"
       homeInfoParams:
         Title: "Hi, I'm Gao 👋"
-        # 头像：相对于 assets/ 的路径，构建时会被裁成 96px 见方
-        avatar: "images/avatar.jpg"
+        # 头像：图床直链（二进制文件不进仓库），换图改这一行
+        avatar: "https://workbuddy-space-static.codebuddy.work/image/poaYhfYZpi4AsdFS5eureK.jpg"
         Content: >
           I write about things I only understood by writing them down — how the
           tools change, how they push the people who use them, and what that
@@ -113,7 +113,7 @@ languages:
       DateFormat: "2006年1月2日"
       homeInfoParams:
         Title: "我是老高 👋"
-        avatar: "images/avatar.jpg"
+        avatar: "https://workbuddy-space-static.codebuddy.work/image/poaYhfYZpi4AsdFS5eureK.jpg"
         # 中文写成一行：YAML 折行会在句间插入空格，中文排版会显得松散
         Content: >
           写那些非得写下来才想清楚的事——工具怎么变、它怎么推着用它的人往前走，以及这些落在一个人身上是什么滋味。这个站叫 **Holly Sunrise**：冬青在冬天还是绿的，日出是每天重来一次。双语写作：**English** 与**中文**。

@@ -4,7 +4,9 @@
 <article class="first-entry home-info">
     <header class="entry-header hs-home-head">
         {{- with .avatar }}
-        {{- $img := resources.Get . }}
+        {{- /* 绝对地址（图床直链）直接输出；相对路径走 assets/ 并缩到 192px */ -}}
+        {{- $img := "" }}
+        {{- if not (urls.Parse .).IsAbs }}{{ $img = resources.Get . }}{{ end }}
         {{- if $img }}
         {{- $thumb := $img.Resize "192x192 jpg" }}
         <img class="hs-home-avatar" src="{{ $thumb.RelPermalink }}" width="96" height="96"

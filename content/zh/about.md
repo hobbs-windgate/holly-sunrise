@@ -16,7 +16,7 @@ comments: false
 ---
 
 <figure class="hs-portrait">
-  <img src="/images/portrait.jpg" alt="高翔" width="260" height="390" loading="eager">
+  <img src="https://workbuddy-space-static.codebuddy.work/image/o2wTDIeIILisidDlhrkuAx.jpg" alt="高翔" width="260" height="390" loading="eager">
 </figure>
 
 人到五十，最怕的就是自我介绍。简历上那些字，看着像自己，读出来又不像。真正的自我介绍难写，因为要交底的不是"我做过什么"，而是"我怎么会走到这儿"。

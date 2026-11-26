@@ -16,7 +16,7 @@ comments: false
 ---
 
 <figure class="hs-portrait">
-  <img src="/images/portrait.jpg" alt="Gao" width="260" height="390" loading="eager">
+  <img src="https://workbuddy-space-static.codebuddy.work/image/o2wTDIeIILisidDlhrkuAx.jpg" alt="Gao" width="260" height="390" loading="eager">
 </figure>
 
 At fifty, the thing I dread most is introducing myself. The lines on a résumé look like me, but they don't sound like me. A real introduction is hard to write, because what has to be laid on the table isn't "what I've done" — it's "how I ended up here."

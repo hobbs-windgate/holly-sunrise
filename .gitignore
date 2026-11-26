@@ -15,3 +15,7 @@ Thumbs.db
 
 # 本地覆盖配置
 config.local.yaml
+
+# 头像 / 肖像：二进制不进仓库，页面上引用图床直链（见 hugo.yaml 与 about.md）
+assets/images/
+static/images/
