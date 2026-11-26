@@ -1,0 +1,30 @@
+{{- /* 评论区：自建，访客无需登录
+   数据存在 Cloudflare KV（绑定名 BLOG_KV），接口见 functions/api/[[path]].js
+   初始 hidden：GET 失败（未绑定 / 离线）时整块不出现，不留破版。 */ -}}
+{{- if and .IsPage (eq .Section "posts") }}
+{{- $zh := eq .Site.Language.Lang "zh" }}
+<section class="hs-comments" data-hs-page="{{ .RelPermalink }}" data-hs-lang="{{ .Site.Language.Lang }}" hidden>
+  <h2 class="hs-comments-title">
+    {{ if $zh }}评论{{ else }}Comments{{ end }}
+    <span class="hs-comments-count" data-hs-comments-count></span>
+  </h2>
+
+  <ul class="hs-comment-list" data-hs-comment-list></ul>
+  <p class="hs-comment-empty" data-hs-comment-empty hidden>{{ if $zh }}还没有人说话。要不要第一个？{{ else }}No comments yet — want to go first?{{ end }}</p>
+
+  <form class="hs-comment-form" data-hs-comment-form novalidate>
+    <div class="hs-comment-form-row">
+      <input class="hs-input" type="text" name="name" maxlength="40" autocomplete="nickname"
+             placeholder="{{ if $zh }}你的名字（可留空）{{ else }}Your name (optional){{ end }}">
+    </div>
+    <textarea class="hs-input hs-textarea" name="body" rows="4" maxlength="2000" required
+              placeholder="{{ if $zh }}说点什么…{{ else }}Say something…{{ end }}"></textarea>
+    <input class="hs-hp" type="text" name="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div class="hs-comment-form-foot">
+      <span class="hs-comment-note">{{ if $zh }}评论直接存在本站，不需要登录。{{ else }}Comments are stored on this site. No account needed.{{ end }}</span>
+      <button class="hs-button" type="submit" data-hs-submit>{{ if $zh }}发表{{ else }}Post{{ end }}</button>
+    </div>
+    <p class="hs-comment-error" data-hs-comment-error hidden></p>
+  </form>
+</section>
+{{- end }}

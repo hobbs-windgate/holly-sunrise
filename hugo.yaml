@@ -69,14 +69,16 @@ languages:
     params:
       # 供 hreflang 使用，显式声明避免依赖 Hugo 版本差异
       hreflang: "en"
-      description: "Field notes on software engineering, trade-offs I got wrong, and the occasional life update. Written in English and Chinese."
+      description: "Essays on technology, education, and how the two reshape a life. Written in English and Chinese."
       DateFormat: "Jan 2, 2006"
       homeInfoParams:
         Title: "Hi, I'm Gao 👋"
+        # 头像：相对于 assets/ 的路径，构建时会被裁成 96px 见方
+        avatar: "images/avatar.jpg"
         Content: >
-          I write about the messy middle of software engineering — the debugging
-          sessions nobody blogs about, the trade-offs I got wrong, and
-          occasionally what all of it does to a person.
+          I write about things I only understood by writing them down — how the
+          tools change, how they push the people who use them, and what that
+          feels like from the inside.
           This is **Holly Sunrise**: holly stays green through winter, sunrise is
           the daily reset. Bilingual: **English** and **中文**.
     menu:
@@ -107,13 +109,14 @@ languages:
     title: "Holly Sunrise — 技术与生活笔记"
     params:
       hreflang: "zh-CN"
-      description: "记录技术实践中的真实经验、踩过的坑，以及偶尔的人生随笔。中英双语。"
+      description: "写技术如何改变人的处境，以及一个人在这种改变里怎么想事。中英双语。"
       DateFormat: "2006年1月2日"
       homeInfoParams:
         Title: "我是老高 👋"
+        avatar: "images/avatar.jpg"
         # 中文写成一行：YAML 折行会在句间插入空格，中文排版会显得松散
         Content: >
-          写软件工程里那些没人体贴的中间地带——没人写博客的排查过程、判断错了的取舍，以及这些事对一个人意味着什么。这个站叫 **Holly Sunrise**：冬青在冬天还是绿的，日出是每天重来一次。双语写作：**English** 与**中文**。
+          写那些非得写下来才想清楚的事——工具怎么变、它怎么推着用它的人往前走，以及这些落在一个人身上是什么滋味。这个站叫 **Holly Sunrise**：冬青在冬天还是绿的，日出是每天重来一次。双语写作：**English** 与**中文**。
     menu:
       main:
         - identifier: posts
@@ -139,8 +142,8 @@ params:
   # hreflang 的 x-default 指向哪个语言（需与 defaultContentLanguage 一致）
   defaultLang: "en"
   title: "Holly Sunrise"
-  description: "Field notes on software engineering and life."
-  keywords: ["software engineering", "hugo blog", "indie developer", "technical writing"]
+  description: "Essays on technology, education and life."
+  keywords: ["essays", "AI", "education", "technology and society"]
   author: "Gao"
   DateFormat: "Jan 2, 2006"
   defaultTheme: "auto"
@@ -162,29 +165,17 @@ params:
 
   mainSections: ["posts"]
 
-  # 社交图标（改成你自己的链接）
-  # LinkedIn / Email 待补：先在 about.md 里写好，再回来加
+  # 社交图标：只留 RSS。
+  # GitHub 链接按要求移除（页面上不再出现任何 GitHub 入口）。
   socialIcons:
-    - name: github
-      url: "https://github.com/hobbs-windgate"
     - name: rss
       url: "/index.xml"
 
-  # ---------- 评论：Giscus（基于 GitHub Discussions，免费） ----------
-  # 文档：https://giscus.app  填完后把 comments 改回 true
-  comments: false
-  giscus:
-    repo: "REPLACE_ME/REPLACE_ME-comments"
-    repoId: "REPLACE_ME_REPO_ID"
-    category: "Announcements"
-    categoryId: "REPLACE_ME_CATEGORY_ID"
-    mapping: "pathname"
-    strict: "0"
-    reactionsEnabled: "1"
-    emitMetadata: "0"
-    inputPosition: "top"
-    theme: "preferred_color_scheme"
-    lang: "en"
+  # ---------- 评论与阅读量 ----------
+  # 由本站自建的 Pages Function 提供（functions/api/[[path]].js），
+  # 数据存在 Cloudflare KV，访客无需任何账号即可评论。
+  # 还没做 KV 绑定时接口返回 503，前端会自动隐藏这两块，不会留下破版。
+  comments: true
 
   # 站内搜索（Fuse.js 参数，词条少可保持默认）
   fuseOpts:

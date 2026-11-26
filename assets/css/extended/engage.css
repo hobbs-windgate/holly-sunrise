@@ -1,0 +1,252 @@
+/* ============================================================
+   Holly Sunrise 自定义样式
+   由 PaperMod 自动拼接：assets/css/extended/*.css
+   全部使用主题变量（--primary / --secondary / --border / --code-bg …），
+   亮色与暗色模式自动跟随，不需要另写一套配色。
+   ============================================================ */
+
+/* ---------------- 首页头像 ---------------- */
+
+.home-info .hs-home-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.home-info .hs-home-head h1 {
+  margin: 0;
+}
+
+.hs-home-avatar {
+  width: 68px;
+  height: 68px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  margin: 0;
+  /* 头像压暗一点点，避免和纯白背景抢注意力 */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 640px) {
+  .hs-home-avatar {
+    width: 56px;
+    height: 56px;
+  }
+  .home-info .hs-home-head {
+    gap: 12px;
+  }
+}
+
+/* ---------------- 关于页（三次改签）肖像 ---------------- */
+
+.hs-portrait {
+  float: right;
+  width: 240px;
+  margin: 4px 0 18px 26px;
+}
+
+.hs-portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+@media (max-width: 640px) {
+  .hs-portrait {
+    float: none;
+    width: 170px;
+    margin: 0 auto 22px;
+  }
+}
+
+/* ---------------- 阅读量 ---------------- */
+
+/* 主题的 reset 对 section / p 设了 display，会盖掉浏览器默认的 [hidden]，
+   导致 JS 判断接口不可用后元素仍然显示。这里显式兜一层。 */
+.hs-views[hidden],
+.hs-comments[hidden] {
+  display: none !important;
+}
+
+.hs-engage {
+  margin: 26px 0 0;
+}
+
+.hs-views {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 4px 10px 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--secondary);
+  line-height: 1.6;
+}
+
+.hs-views .hs-icon {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  opacity: 0.8;
+}
+
+/* ---------------- 评论区 ---------------- */
+
+.hs-comments {
+  margin-top: 40px;
+  padding-top: 26px;
+  border-top: 1px solid var(--border);
+}
+
+.hs-comments-title {
+  font-size: 1.05rem;
+  margin: 0 0 18px;
+  color: var(--primary);
+}
+
+.hs-comments-count {
+  color: var(--secondary);
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+.hs-comment-list {
+  list-style: none;
+  margin: 0 0 26px;
+  padding: 0;
+}
+
+.hs-comment {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.hs-comment:last-child {
+  border-bottom: 0;
+}
+
+.hs-comment-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.hs-comment-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.hs-comment-time {
+  font-size: 12px;
+  color: var(--secondary);
+}
+
+.hs-comment-body {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--content);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.hs-comment-empty {
+  margin: 0 0 24px;
+  font-size: 14px;
+  color: var(--secondary);
+}
+
+.hs-comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hs-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--content);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.15s ease;
+}
+
+.hs-input:focus {
+  outline: none;
+  border-color: var(--secondary);
+}
+
+.hs-textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+/* 蜜罐字段：给机器人填，人看不见 */
+.hs-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hs-comment-form-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hs-comment-note {
+  font-size: 12px;
+  color: var(--secondary);
+}
+
+.hs-button {
+  flex: 0 0 auto;
+  padding: 8px 20px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--theme);
+  background: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.hs-button:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.hs-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.hs-comment-error {
+  margin: 0;
+  font-size: 13px;
+  color: #c0392b;
+}
+
+[data-theme="dark"] .hs-comment-error {
+  color: #ff8a80;
+}

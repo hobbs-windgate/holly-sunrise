@@ -2,3 +2,19 @@
 # Google Search Console 的 HTML 文件验证要求原 URL 直接返回 200 + 文件内容，
 # 这里用 200 状态做「重写」，绕过那个自动重定向。
 /google130934422994ceb1.html  /google130934422994ceb1  200
+
+# ------------------------------------------------------------------
+# 旧文章已下线（内容替换为两篇随笔），源文件保留在仓库 _archive/posts/
+# 老 URL 若被搜索引擎或外链引用，301 到文章列表，不留 404
+# ------------------------------------------------------------------
+/posts/bilingual-hugo-blog-seo/      /posts/   301
+/posts/cloudflare-pages-502/         /posts/   301
+/posts/five-years-of-blogging/       /posts/   301
+/posts/indie-hacker-first-year/      /posts/   301
+/posts/sqlite-vs-postgres/           /posts/   301
+
+/zh/posts/bilingual-hugo-blog-seo/   /zh/posts/   301
+/zh/posts/cloudflare-pages-502/      /zh/posts/   301
+/zh/posts/five-years-of-blogging/    /zh/posts/   301
+/zh/posts/indie-hacker-first-year/   /zh/posts/   301
+/zh/posts/sqlite-vs-postgres/        /zh/posts/   301

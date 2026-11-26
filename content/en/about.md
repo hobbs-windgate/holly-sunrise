@@ -1,34 +1,44 @@
 ---
-title: "About"
-date: 2026-11-24
+title: "Three Rebookings"
+date: 2026-11-25
+lastmod: 2026-11-26
 url: "/about/"
-summary: "Who writes this, what it is about, and how to reach me."
+draft: false
+translationKey: "about"
+summary: "At fifty, the hardest thing to write is an introduction. What has to be laid on the table is not what I have done, but how I ended up here — three rebookings, each one further inward."
 ShowToc: false
-ShowReadingTime: false
+ShowReadingTime: true
+ShowWordCount: true
 ShowShareButtons: false
+disableShare: true
 ShowBreadCrumbs: true
+comments: false
 ---
 
-I'm Gao — a software engineer who keeps a notebook in public.
+<figure class="hs-portrait">
+  <img src="/images/portrait.jpg" alt="Gao" width="260" height="390" loading="eager">
+</figure>
 
-**Holly Sunrise** is the name I gave it. Holly stays green through the winter; sunrise is the same event happening again, slightly differently. That is roughly what I want from a blog — durable enough to still be useful in January, repeatable enough that showing up stops being a decision.
+At fifty, the thing I dread most is introducing myself. The lines on a résumé look like me, but they don't sound like me. A real introduction is hard to write, because what has to be laid on the table isn't "what I've done" — it's "how I ended up here."
 
-I spent most of the last decade shipping things that other people's businesses depended on: payment flows, data pipelines, deploy tooling, and an unreasonable number of internal dashboards. Along the way I developed a habit of writing down the parts that did not fit into a ticket — the wrong turn, the assumption that held for two years and then didn't, the afternoon lost to an error message that meant something other than what it said.
+I entered the best university in the country at fifteen. It sounds like bragging; it was an accident. Not precocity — the examination system happened to fit me the way a key happens to fit a lock. I was young, naive, and surrounded by no one who could point the way. I spent four years walking through fog and came out unable to say what I had learned. Looking back, those four years feel like someone else attended them on my behalf.
 
-## What you will find here
+The year I graduated, I placed first in the entrance exam for a research institute and went on to graduate school. I had two advisors: the institute's director and the head of its science and technology committee. In the 1980s that arrangement had a name people were slightly embarrassed to say out loud: successor. I took it as my due. When you are young you assume the world will wait — that you can play a while longer and come back for the thing already set aside for you.
 
-- **Engineering notes** — debugging sessions, architecture trade-offs, and tooling that earned its place. Written to be useful in six months, not to be impressive today.
-- **Life & career** — what this work does to a person over time. Less frequent, less searchable, and honestly the reason I keep the site.
+A few years later, I left the country.
 
-Everything is written in both **English** and **中文**. They are not literal translations; each version is written for its own reader.
+That was the first rebooking.
 
-## How I write
+I drifted through several places in Europe and North America. The days were livable, even comfortable. Only later did I understand that the word *stability* is a bed for some people and a stone for others — something pressing on your chest until you cannot breathe. Once the idea of working for myself took hold, I could not press it down again. So I packed once more and went home.
 
-Every post starts from a question I actually had. If I cannot remember the question, I do not publish the post. Titles describe the problem, not the solution — you should be able to tell from the headline whether this page is your problem.
+That was the second rebooking.
 
-## Elsewhere
+Ten years of building a company; the beatings need no retelling, since anyone who has run one keeps the same ledger. I will give only the conclusion: every pit described in the books, I stepped into carefully; the few the books omitted, I supplied myself.
 
-- GitHub — [hobbs-windgate](https://github.com/hobbs-windgate)
-- RSS — [/index.xml](/index.xml)
+At fifty I wound things down and cleared a corner on the internet to hold the thoughts that keep pacing around my head. That was the third rebooking — from the office out there to the one in here.
 
-The fastest way to reach me is on GitHub. I read everything and reply to most of it.
+The ancients said that at fifty you come to know the mandate of heaven. I would not claim to know it; I can say only that my fingers have just brushed the edge. I used to think the mandate was a road already drawn, and your job was to follow it. I don't think that now. It is closer to recognizing yourself: this is the person you are — restless, allergic to being managed, incapable of a settled life, compelled to step where there is no path and then, having stepped, to write it down. Accept that, and the life has not been wasted.
+
+People ask whether I regret any of it. I have thought about it; I don't. And if I could start over, I would probably make the same mistakes — because the mandate of heaven is not fate choosing for you. It is you circling back, again and again, to the same self.
+
+This corner is my ledger. The footprints went crooked, and I have no intention of straightening them.

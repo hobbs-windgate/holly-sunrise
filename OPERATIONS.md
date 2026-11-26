@@ -18,15 +18,34 @@
 |---|---|---|
 | `content/zh/posts/` | **中文文章**（放这里，别放别处） | ✅ 天天改 |
 | `content/en/posts/` | **英文文章** | ✅ 天天改 |
-| `content/{zh,en}/about.md` | About 页 | ✅ 可以改 |
+| `content/{zh,en}/about.md` | 关于页（现在是《三次改签》） | ✅ 可以改 |
 | `content/{zh,en}/search.md` | 站内搜索页 | ⚠️ 只改文案，别删（搜索依赖它） |
-| `hugo.yaml` | 全站配置（站点名、菜单、社交链接、评论） | ✅ 可以改，改完本地先预览 |
-| `layouts/_partials/extend_head.html` | 搜索验证码、统计代码 | ✅ 只往里加内容 |
+| `hugo.yaml` | 全站配置（站点名、菜单、社交链接） | ✅ 可以改，改完本地先预览 |
+| `assets/images/avatar.jpg` | 首页头像（正方形，构建时缩到 192px） | ✅ 换图直接用同名覆盖 |
+| `static/images/portrait.jpg` | 关于页的竖版肖像 | ✅ 换图直接用同名覆盖 |
+| `assets/css/extended/engage.css` | 头像、阅读量、评论区样式 | ✅ 可以改 |
+| `static/js/engage.js` | 阅读量与评论区的前端逻辑 | ⚠️ 能改，但改完要本地测 |
+| `functions/api/[[path]].js` | 阅读量/评论的后端接口 | ⚠️ 能改，改完要本地测 |
+| `layouts/_partials/` | 主题扩展与几处小覆盖 | ⚠️ 见下方「主题覆盖」说明 |
+| `_archive/posts/` | 已下线的旧文章（不参与构建，留个底） | ✅ 可以翻看 |
 | `build.sh` | 云端构建脚本，负责下载正确版本的 Hugo | ❌ **别删，删了构建必挂** |
 | `themes/PaperMod/` | 主题源码 | ❌ 别改。要升级就整个替换 |
 | `static/` | 图标等原样拷贝的文件 | ✅ 可以放图片 |
 | `public/` | 构建产物 | ❌ **不要提交**（已被 .gitignore 忽略） |
 | `scripts/` | 建文章的脚本 | ✅ 可以改 |
+
+### 主题覆盖：`layouts/_partials/` 里这四个文件是"替主题说话"
+
+Hugo 会优先用站点自己的同名模板，所以这四个文件盖住了 Theme 里的对应文件：
+
+| 文件 | 改了什么 | 主题升级时的注意 |
+|---|---|---|
+| `home_info.html` | 首页标题左边加头像 | 主题若改首页结构，需要重新对比 |
+| `extend_post_content.html` | 正文后加阅读量胶囊，并加载 `engage.js` | 不会冲突 |
+| `comments.html` | 评论区（主题里本来是空的） | 不会冲突 |
+| `footer.html` | **整份副本**，只把署名里的 PaperMod 链接改成纯文本 | ⚠️ 升级主题后要重新拷一次，否则页脚脚本会旧 |
+
+`footer.html` 是唯一一份"抄下来的"文件——因为页脚里有菜单滚动记忆、主题切换、代码复制按钮的脚本，不能只写一小段。升级主题时：把 `themes/PaperMod/layouts/_partials/footer.html` 重新复制过来，再把 `https://github.com/adityatelange/hugo-PaperMod/` 那个 `<a>` 换成纯文字 `PaperMod`。
 
 ---
 
@@ -217,13 +236,42 @@ https://www.bing.com/webmasters → 可以直接从 Google Search Console 导入
 
 Cloudflare 后台 → **Analytics & Logs → Web Analytics** → 添加站点 `holly-sunrise.pages.dev` → 拿到 token → 填进 `extend_head.html` 第 3 节（同样是注释状态）。免费、无 cookie，不需要加隐私弹窗。
 
-### 7.4 评论（可选）
+### 7.4 阅读量与评论区（需要做一次，5 分钟）
 
-项目里已预留 **Giscus** 配置，但 `comments: false` 关着。要开启：
+评论与阅读量是自建的：页面上是一段 JS，数据存在你自己 Cloudflare 账号下的 KV 里。
+**没做这一步之前，这两块会自动隐藏**——页面不会出现「0 次阅读」或空评论框，也不会报错。
 
-1. 装 Giscus App：https://github.com/apps/giscus（授权到 `holly-sunrise` 仓库）
-2. 打开 https://giscus.app，填入仓库名，拿到 `repo-id` 和 `category-id`
-3. 填进 `hugo.yaml` 的 `params.giscus`，把 `comments` 改成 `true`
+**第 1 步：建 KV 命名空间**
+
+1. Cloudflare 后台 → **Storage & Databases → KV**（旧界面在 Workers & Pages → KV）
+2. **Create a namespace**，名字填 `holly-sunrise-kv`，保存
+
+**第 2 步：绑定到 Pages 项目**
+
+1. **Workers & Pages → holly-sunrise → Settings → Bindings**（部分界面叫 Functions → KV namespace bindings）
+2. **Add binding** → 类型选 **KV namespace**
+3. Variable name 必须填 **`BLOG_KV`**（大小写要一致，代码里按这个名字找）
+4. Namespace 选上一步建的 `holly-sunrise-kv` → 保存
+
+**第 3 步：重新部署**
+
+绑定改动需要一次新部署才生效：随便改个文件 `git push`，或在 Deployments 页点 **Retry deployment**。
+
+**怎么验收**
+
+浏览器直接打开：
+`https://holly-sunrise.pages.dev/api/view?p=/posts/when-ai-finishes-the-work/`
+
+- 看到 `{"ok":true,"count":0}` → 通了（count 会随着访问增长）
+- 看到 `{"ok":false,"error":"storage_unbound"}` → 绑定没生效，回到第 2 步核对变量名
+- 看到 404 → 仓库里 `functions/` 目录没推上去
+
+**评论区怎么管**
+
+- 评论直接显示，不需要审核。防滥用只做了三件事：蜜罐字段、单条 2000 字上限、同一 IP 一分钟一条
+- 要删某条评论：Cloudflare → KV → `holly-sunrise-kv` → 按前缀 `c:/zh/posts/...` 找到键 → 删除
+- 评论是纯文本存储和纯文本渲染，不会被当成 HTML 执行
+- 中英文是两个独立的评论区（URL 不同），这是有意的
 
 ### 7.5 已经做过的 SEO 精修（别改回去）
 

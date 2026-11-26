@@ -1,0 +1,20 @@
+{{- /* 文章底部：阅读量 + 评论区入口的容器
+   仅在 posts 文章页输出；关于页、搜索页等不显示。
+   阅读量初始 hidden，由 /js/engage.js 拿到数据后再显示，
+   避免 KV 未绑定（接口 503）时页面上留一个空白占位。 */ -}}
+{{- if and .IsPage (eq .Section "posts") }}
+<div class="hs-engage">
+  <p class="hs-views" data-hs-page="{{ .RelPermalink }}" data-hs-lang="{{ .Site.Language.Lang }}" hidden>
+    <svg class="hs-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"
+         fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1.5 12S5 5.5 12 5.5 22.5 12 22.5 12 19 18.5 12 18.5 1.5 12 1.5 12z"></path>
+      <circle cx="12" cy="12" r="3"></circle>
+    </svg>
+    <span data-hs-views-count>0</span>
+    <span data-hs-views-label>{{ if eq .Site.Language.Lang "zh" }}次阅读{{ else }}views{{ end }}</span>
+  </p>
+</div>
+{{- /* 脚本放在这里而不是 extend_footer：主题用 partialCached 缓存页脚，
+   extend_footer 内的判断只会按第一个页面算一次，文章页会拿不到脚本 */ -}}
+<script src="/js/engage.js" defer></script>
+{{- end }}

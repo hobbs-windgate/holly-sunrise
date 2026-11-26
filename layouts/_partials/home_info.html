@@ -1,0 +1,27 @@
+{{- /* 覆盖 PaperMod 的 home_info.html：在标题左侧加头像，其余保持主题原样
+   （不启用 profileMode，否则首页只会剩一张名片卡、文章列表消失） */ -}}
+{{- with site.Params.homeInfoParams }}
+<article class="first-entry home-info">
+    <header class="entry-header hs-home-head">
+        {{- with .avatar }}
+        {{- $img := resources.Get . }}
+        {{- if $img }}
+        {{- $thumb := $img.Resize "192x192 jpg" }}
+        <img class="hs-home-avatar" src="{{ $thumb.RelPermalink }}" width="96" height="96"
+             alt="Gao" title="Gao" loading="eager" decoding="async">
+        {{- else }}
+        <img class="hs-home-avatar" src="{{ . | absURL }}" width="96" height="96"
+             alt="Gao" title="Gao" loading="eager" decoding="async">
+        {{- end }}
+        {{- end }}
+        <h1>{{ .Title | markdownify }}</h1>
+    </header>
+    <div class="entry-content md-content">
+        {{ $opts := dict "display" "block" }}
+        {{ .Content | $.Page.RenderString $opts }}
+    </div>
+    <footer class="entry-footer">
+        {{ partial "social_icons.html" (dict "align" site.Params.homeInfoParams.AlignSocialIconsTo) }}
+    </footer>
+</article>
+{{- end -}}
