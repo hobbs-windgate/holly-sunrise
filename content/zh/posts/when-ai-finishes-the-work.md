@@ -3,6 +3,10 @@ title: "当 AI 把活干完"
 date: 2026-11-26
 lastmod: 2026-11-26
 draft: false
+cover:
+  image: "https://workbuddy-space-static.codebuddy.work/image/1Yt3Wf8UztE6ZlajTW21XX.jpg"
+  alt: "几乎清空的棋盘，只剩一个棋子"
+  relative: false
 translationKey: "when-ai-finishes-the-work"
 slug: "when-ai-finishes-the-work"
 summary: "达里奥那句「用沉浸式游戏把人安顿住」被骂成面包与马戏。我不急着骂——工作消失时，断掉的不只是工资，还有那条走了几千年的路：努力，吃苦，然后成功。"

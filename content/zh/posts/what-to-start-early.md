@@ -3,6 +3,10 @@ title: "AI 时代，什么要早动手"
 date: 2026-11-28
 lastmod: 2026-11-28
 draft: false
+cover:
+  image: "https://workbuddy-space-static.codebuddy.work/image/IIJPL1OB3ujqx5mJmGZgu0.jpg"
+  alt: "沙漏里落下的不是沙，是种子"
+  relative: false
 translationKey: "what-to-start-early"
 slug: "what-to-start-early"
 summary: "老一辈遇上荒年先囤粮。AI 这一场要囤的不是粮，是能生息的东西：地、股权、一处将来会挤满人的地方。能做的事很多，要早做的事很少。"

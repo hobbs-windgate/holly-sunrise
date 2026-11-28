@@ -135,8 +135,8 @@
 }
 
 .hs-like:hover:not(:disabled) {
-  color: #e0525f;
-  border-color: #e0525f;
+  color: var(--ember);
+  border-color: var(--ember);
 }
 
 .hs-like:focus-visible {
@@ -146,9 +146,9 @@
 
 /* 已赞：实心红心，不可再点 */
 .hs-like.is-liked {
-  color: #e0525f;
-  border-color: rgba(224, 82, 95, 0.55);
-  background: rgba(224, 82, 95, 0.08);
+  color: var(--ember);
+  border-color: var(--ember-line);
+  background: var(--ember-soft);
   cursor: default;
 }
 
@@ -173,14 +173,9 @@
   }
 }
 
-[data-theme="dark"] .hs-like:hover:not(:disabled),
-[data-theme="dark"] .hs-like.is-liked {
-  color: #ff8a94;
-  border-color: rgba(255, 138, 148, 0.5);
-}
-
-[data-theme="dark"] .hs-like.is-liked {
-  background: rgba(255, 138, 148, 0.1);
+[data-theme="dark"] .hs-like:hover:not(:disabled) {
+  color: var(--ember);
+  border-color: var(--ember);
 }
 
 /* ---------------- 评论区 ---------------- */
@@ -330,9 +325,5 @@
 .hs-comment-error {
   margin: 0;
   font-size: 13px;
-  color: #c0392b;
-}
-
-[data-theme="dark"] .hs-comment-error {
-  color: #ff8a80;
+  color: var(--ember);
 }

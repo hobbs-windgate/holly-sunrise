@@ -3,6 +3,10 @@ title: "When Cleverness Starts to Depreciate"
 date: 2026-11-25
 lastmod: 2026-11-25
 draft: false
+cover:
+  image: "https://workbuddy-space-static.codebuddy.work/image/iHigKXDtqhByhPISt67muw.jpg"
+  alt: "An old balance scale weighing a stack of paper against one small block"
+  relative: false
 translationKey: "when-cleverness-goes-cheap"
 slug: "when-cleverness-goes-cheap"
 summary: "AI does not replace muscle. It replaces the part of intelligence that can be taught, tested and scored — exactly where education has placed its heaviest bets. So were the tutoring fees, the school-district apartment and ten years of sitting beside a child worth it? My answer splits in two."

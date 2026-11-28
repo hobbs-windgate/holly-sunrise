@@ -4,6 +4,10 @@ date: 2026-11-25
 lastmod: 2026-11-25
 url: "/about/"
 draft: false
+cover:
+  image: "https://workbuddy-space-static.codebuddy.work/image/tTaE8YFfFQzXBvPFmC0gaa.jpg"
+  alt: "A single line changing direction three times, each turn marked with a red dot"
+  relative: false
 translationKey: "about"
 summary: "Introducing myself is awkward work. What has to be laid on the table is not what I have done, but how I ended up here — three rebookings, each one further inward."
 ShowToc: false

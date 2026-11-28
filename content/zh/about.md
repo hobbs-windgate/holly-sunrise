@@ -4,6 +4,10 @@ date: 2026-11-25
 lastmod: 2026-11-25
 url: "/zh/about/"
 draft: false
+cover:
+  image: "https://workbuddy-space-static.codebuddy.work/image/tTaE8YFfFQzXBvPFmC0gaa.jpg"
+  alt: "一根线三次转向，每个转折点标一个红点"
+  relative: false
 translationKey: "about"
 summary: "自我介绍这活儿不好干：要交底的不是「我做过什么」，而是「我怎么会走到这儿」——三次改签，一次比一次往里走。"
 ShowToc: false

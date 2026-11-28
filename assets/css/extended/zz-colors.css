@@ -1,0 +1,282 @@
+/* ============================================================
+   配色：方案 B（站名取色）
+   冬青绿 #2F5D4E  做主强调：链接、导航当前项、标签描边
+   朱砂红 #B8402E  做次强调，且只出现在「活的东西」上：
+                    已点赞的心、RSS、当天日期、悬停边线
+   底色从纯白挪到暖白 #FCFCFA，正文墨带一点绿 #232826
+
+   为什么次强调要从橙改成更红的朱砂：
+   橙色在暖白底上偏「奶」，和冬青绿并置时容易糊成一片暖调；
+   往红移之后与绿形成真正的补色张力，但饱和度压在 45% 上下，
+   不会变成通知红。暗色模式单独提亮，不直接铺饱和色。
+
+   本文件靠「变量覆盖 + 少量选择器」生效，不改主题源码。
+   文件名以 zz- 开头是必须的：PaperMod 按文件名排序拼接 css/extended/*.css，
+   只有排在 engage.css 之后，这里的 .hs-views / .hs-like 才能盖过它。
+   ============================================================ */
+
+:root {
+  --theme: #fcfcfa;
+  --entry: #ffffff;
+  --primary: #1f2320;
+  --secondary: #63615c;
+  --tertiary: #c9c4b7;
+  --content: #232826;
+  --code-bg: #f4f2eb;
+  --code-block-bg: #23272a;
+  --border: #e5e2da;
+
+  --accent: #2f5d4e;          /* 冬青绿 */
+  --accent-ink: #28503f;      /* 文字用，略深一档保对比 */
+  --accent-soft: rgba(47, 93, 78, 0.09);
+  --accent-line: rgba(47, 93, 78, 0.28);
+  --ember: #b8402e;           /* 朱砂红 */
+  --ember-soft: rgba(184, 64, 46, 0.09);
+  --ember-line: rgba(184, 64, 46, 0.34);
+  --lift: 0 6px 18px rgba(31, 35, 32, 0.06);
+}
+
+:root[data-theme="dark"] {
+  --theme: #1b1d1e;
+  --entry: #232627;
+  --primary: #e4e4e1;
+  --secondary: #9a9a94;
+  --tertiary: #3a3c3b;
+  --content: #cfcfca;
+  --code-bg: #222524;
+  --code-block-bg: #17191a;
+  --border: #2e3231;
+
+  --accent: #7fb39b;
+  --accent-ink: #8fc0a9;
+  --accent-soft: rgba(127, 179, 155, 0.11);
+  --accent-line: rgba(127, 179, 155, 0.32);
+  --ember: #de7a62;
+  --ember-soft: rgba(222, 122, 98, 0.12);
+  --ember-line: rgba(222, 122, 98, 0.38);
+  --lift: 0 6px 18px rgba(0, 0, 0, 0.28);
+}
+
+/* ---------------- 基础 ---------------- */
+
+body {
+  color: var(--content);
+  /* 极淡的一层暖光：从右上角渗进来，几乎看不出来，但底色不再是「死白」 */
+  background-image: radial-gradient(
+    1100px 520px at 78% -8%,
+    rgba(184, 64, 46, 0.045),
+    transparent 62%
+  );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+:root[data-theme="dark"] body {
+  background-image: radial-gradient(
+    1100px 520px at 78% -8%,
+    rgba(222, 122, 98, 0.06),
+    transparent 62%
+  );
+}
+
+/* ---------------- 链接 ---------------- */
+
+.post-content a,
+.md-content a,
+.post-description a {
+  color: var(--accent-ink);
+  text-decoration-color: var(--accent-line);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.post-content a:hover,
+.md-content a:hover {
+  text-decoration-color: var(--accent);
+}
+
+/* ---------------- 导航 ---------------- */
+
+.menu a:hover,
+.menu a:focus-visible {
+  color: var(--accent-ink);
+}
+
+.menu .active {
+  border-bottom-color: var(--accent);
+  color: var(--primary);
+}
+
+/* 站名：整站唯一一处「满色」的文字，给暖白底一个锚点 */
+.logo a {
+  color: var(--accent);
+  letter-spacing: 0.01em;
+}
+
+.logo a:hover {
+  color: var(--accent-ink);
+}
+
+/* RSS 属于「活的东西」，用朱砂 */
+.social-icons a:hover,
+.social-icons a:focus-visible {
+  color: var(--ember);
+}
+
+/* ---------------- 文章标题：短杠而不是整条下划线 ---------------- */
+
+/* 注意：h1 带着 .entry-hint-parent，是 flex 容器（给草稿角标留位）。
+   直接 ::after 会被当成 flex 子项排到标题右侧，必须允许换行再用
+   100% 的基底把它挤到下一行，靠渐变只画出左边 44px。 */
+.post-title {
+  flex-wrap: wrap;
+}
+
+.post-title::after {
+  content: "";
+  flex: 0 0 100%;
+  height: 3px;
+  margin-top: 16px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent) 0 44px, transparent 44px);
+}
+
+/* ---------------- 列表卡片 ---------------- */
+
+.post-entry {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.post-entry:hover,
+.post-entry:focus-within {
+  transform: translateY(-3px);
+  border-color: var(--accent-line);
+  box-shadow: var(--lift);
+}
+
+.post-entry:hover .entry-header h2 {
+  color: var(--accent-ink);
+}
+
+.entry-header h2 {
+  transition: color 0.2s ease;
+}
+
+/* 封面：统一 16:9 裁切，圆角与外框一致 */
+.entry-cover img {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+}
+
+.entry-cover {
+  margin-bottom: 14px;
+}
+
+/* ---------------- 标签：细边 + 绿字，悬停才填色 ---------------- */
+
+/* 小字号下 --accent-ink 会读成「黑」，所以徽标类元素直接用 --accent，
+   并把描边加浓一档，让绿在 14px 字号上也成立 */
+.post-tags a {
+  color: var(--accent);
+  border: 1px solid rgba(47, 93, 78, 0.26);
+  background: var(--accent-soft);
+  border-radius: 5px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+:root[data-theme="dark"] .post-tags a {
+  border-color: rgba(127, 179, 155, 0.42);
+}
+
+.post-tags a:hover {
+  border-color: var(--accent);
+  background: rgba(47, 93, 78, 0.16);
+}
+
+:root[data-theme="dark"] .post-tags a:hover {
+  background: rgba(127, 179, 155, 0.2);
+}
+
+/* ---------------- 正文里的引用与分隔 ---------------- */
+
+.post-content blockquote {
+  border-inline-start: 3px solid var(--accent-line);
+  background: var(--accent-soft);
+  border-radius: 0 6px 6px 0;
+  padding-inline: 16px;
+}
+
+.post-content hr {
+  border-top: 1px solid var(--border);
+}
+
+.post-content code {
+  background: var(--code-bg);
+  border-radius: 4px;
+}
+
+/* 文中加粗：不换色，只把字重压住，避免满页彩色 */
+.post-content strong {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* ---------------- 顶栏与页脚的一条细线 ---------------- */
+
+.header {
+  border-bottom: 1px solid var(--border);
+}
+
+/* ---------------- 首页头像 ---------------- */
+
+.hs-home-avatar {
+  box-shadow: 0 0 0 1px var(--border), 0 0 0 5px var(--accent-soft);
+}
+
+/* ---------------- 阅读量 / 点赞 胶囊（engage.css 用的是同一套变量） ---------------- */
+
+.hs-views {
+  border-color: rgba(47, 93, 78, 0.42);
+  color: var(--accent);
+}
+
+.hs-views .hs-icon {
+  color: var(--accent);
+  opacity: 1;
+}
+
+:root[data-theme="dark"] .hs-views,
+:root[data-theme="dark"] .hs-like {
+  border-color: rgba(127, 179, 155, 0.42);
+}
+
+.hs-like {
+  border-color: rgba(47, 93, 78, 0.42);
+  color: var(--accent);
+}
+
+.hs-like:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* 已赞：朱砂红，不用正红——正红在暖白底上会跳出来抢标题 */
+.hs-like.is-liked {
+  color: var(--ember);
+  border-color: var(--ember-line);
+  background: var(--ember-soft);
+}
+
+.hs-like.is-liked .hs-icon {
+  color: var(--ember);
+}
+
+:root[data-theme="dark"] .hs-like.is-liked {
+  color: var(--ember);
+  border-color: var(--ember-line);
+  background: var(--ember-soft);
+}

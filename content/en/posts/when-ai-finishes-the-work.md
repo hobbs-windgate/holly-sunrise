@@ -3,6 +3,10 @@ title: "When the AI Finishes the Work"
 date: 2026-11-26
 lastmod: 2026-11-26
 draft: false
+cover:
+  image: "https://workbuddy-space-static.codebuddy.work/image/1Yt3Wf8UztE6ZlajTW21XX.jpg"
+  alt: "A nearly empty chessboard with a single piece left"
+  relative: false
 translationKey: "when-ai-finishes-the-work"
 slug: "when-ai-finishes-the-work"
 summary: "Dario Amodei once suggested that immersive games might settle people down as AI displaces work. The line was read as bread and circuses. I'll hold off on the outrage: when work disappears, what breaks is not only the wage but a road walked for thousands of years — effort, hardship, then success."

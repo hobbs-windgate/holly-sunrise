@@ -26,7 +26,9 @@
 | `hugo.yaml` | 全站配置（站点名、菜单、社交链接） | ✅ 可以改，改完本地先预览 |
 | `hugo.yaml` → `avatar` | 首页头像（图床直链，两种语言各一处） | ✅ 换图只改 URL |
 | `content/{zh,en}/about.md` 开头 | 关于页肖像（图床直链） | ✅ 换图只改 `<img src>` |
+| `assets/css/extended/zz-colors.css` | **全站配色**（底色、正文墨、强调绿、朱砂红） | ✅ 改这一处就够 |
 | `assets/css/extended/engage.css` | 头像、阅读量、点赞、评论区样式 | ✅ 可以改 |
+| 各篇 front matter 的 `cover` | 文章封面（图床直链 + alt） | ✅ 换图只改 URL |
 | `static/js/engage.js` | 阅读量、点赞与评论区的前端逻辑 | ⚠️ 能改，但改完要本地测 |
 | `functions/api/[[path]].js` | 阅读量 / 点赞 / 评论的后端接口 | ⚠️ 能改，改完要本地测 |
 | `layouts/_partials/` | 主题扩展与几处小覆盖 | ⚠️ 见下方「主题覆盖」说明 |
@@ -49,6 +51,39 @@ Hugo 会优先用站点自己的同名模板，所以这四个文件盖住了 Th
 | `footer.html` | **整份副本**，只把署名里的 PaperMod 链接改成纯文本 | ⚠️ 升级主题后要重新拷一次，否则页脚脚本会旧 |
 
 `footer.html` 是唯一一份"抄下来的"文件——因为页脚里有菜单滚动记忆、主题切换、代码复制按钮的脚本，不能只写一小段。升级主题时：把 `themes/PaperMod/layouts/_partials/footer.html` 重新复制过来，再把 `https://github.com/adityatelange/hugo-PaperMod/` 那个 `<a>` 换成纯文字 `PaperMod`。
+
+### 配色：一共只有两个颜色，别再加第三个
+
+全站颜色写在 `assets/css/extended/zz-colors.css`，方式是覆盖 PaperMod 的 CSS 变量，**不碰主题源码**：
+
+| 变量 | 亮色 | 暗色 | 用在哪 |
+|---|---|---|---|
+| `--accent` | `#2F5D4E` 冬青绿 | `#7FB39B` | 站名、标签、链接、标题下的短杠、胶囊描边 |
+| `--ember` | `#B8402E` 朱砂红 | `#DE7A62` | 已点赞的心、RSS 悬停、评论错误提示 |
+| `--theme` / `--entry` | `#FCFCFA` / `#FFFFFF` | `#1B1D1E` / `#232627` | 页面底 / 卡片底 |
+| `--content` / `--primary` | `#232826` / `#1F2320` | `#CFCFCA` / `#E4E4E1` | 正文 / 标题 |
+
+三条规则，改色时别破坏：
+
+1. **文件名必须以 `zz-` 开头**。PaperMod 按文件名顺序拼接 `css/extended/*.css`，只有排在 `engage.css` 之后，这里的 `.hs-views`、`.hs-like` 才能盖过它。改名成 `colors.css` 会让点赞胶囊变回灰色。
+2. **红只给"活的东西"**：点赞、RSS、报错。标题、按钮、边框一律用绿，否则整页会花。
+3. **暗色不铺饱和色**，绿要提到 `#7FB39B`、红压到 `#DE7A62`，直接沿用亮色值会刺眼。
+
+### 文章封面怎么写
+
+每篇 front matter 里：
+
+```yaml
+cover:
+  image: "https://workbuddy-space-static.codebuddy.work/image/xxxx.jpg"
+  alt: "一句话描述画面，给搜索引擎和读屏用"
+  relative: false
+```
+
+- 图片走图床直链，**不进仓库**（GitHub 通道推不了二进制）。
+- 尺寸统一 1200×752（16:9），页面按 16:9 裁切，列表卡片与文章页共用同一张。
+- 图是生成的，右下角原本带「AI生成」水印，上传前裁掉底部 62px。
+- 想临时不在列表里显示封面：`cover.hiddenInList: true`。
 
 ---
 

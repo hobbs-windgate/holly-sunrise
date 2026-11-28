@@ -3,6 +3,10 @@ title: "当聪明开始贬值"
 date: 2026-11-25
 lastmod: 2026-11-25
 draft: false
+cover:
+  image: "https://workbuddy-space-static.codebuddy.work/image/iHigKXDtqhByhPISt67muw.jpg"
+  alt: "一架旧天平：一边一叠白纸，一边一个小方块，纸那头翘起"
+  relative: false
 translationKey: "when-cleverness-goes-cheap"
 slug: "when-cleverness-goes-cheap"
 summary: "AI 替代的不是力气，是那部分可以教、可以考、可以打分的智力——而这正是教育下注最重的地方。补习费、学区房、陪读的十年，还值不值？我的答案分两半。"

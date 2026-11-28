@@ -3,6 +3,10 @@ title: "In the AI Era, What's Worth Starting Early"
 date: 2026-11-28
 lastmod: 2026-11-28
 draft: false
+cover:
+  image: "https://workbuddy-space-static.codebuddy.work/image/IIJPL1OB3ujqx5mJmGZgu0.jpg"
+  alt: "An hourglass where seeds fall instead of sand"
+  relative: false
 translationKey: "what-to-start-early"
 slug: "what-to-start-early"
 summary: "Older generations met a bad year by stocking grain. If the AI transition counts as one, the thing to stock is not grain but a few assets that breed: land, equity, and a place everyone will want later. There is much you can do and very little you must do early."
