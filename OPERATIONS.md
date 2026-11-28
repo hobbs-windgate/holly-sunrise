@@ -23,9 +23,9 @@
 | `hugo.yaml` | 全站配置（站点名、菜单、社交链接） | ✅ 可以改，改完本地先预览 |
 | `hugo.yaml` → `avatar` | 首页头像（图床直链，两种语言各一处） | ✅ 换图只改 URL |
 | `content/{zh,en}/about.md` 开头 | 关于页肖像（图床直链） | ✅ 换图只改 `<img src>` |
-| `assets/css/extended/engage.css` | 头像、阅读量、评论区样式 | ✅ 可以改 |
-| `static/js/engage.js` | 阅读量与评论区的前端逻辑 | ⚠️ 能改，但改完要本地测 |
-| `functions/api/[[path]].js` | 阅读量/评论的后端接口 | ⚠️ 能改，改完要本地测 |
+| `assets/css/extended/engage.css` | 头像、阅读量、点赞、评论区样式 | ✅ 可以改 |
+| `static/js/engage.js` | 阅读量、点赞与评论区的前端逻辑 | ⚠️ 能改，但改完要本地测 |
+| `functions/api/[[path]].js` | 阅读量 / 点赞 / 评论的后端接口 | ⚠️ 能改，改完要本地测 |
 | `layouts/_partials/` | 主题扩展与几处小覆盖 | ⚠️ 见下方「主题覆盖」说明 |
 | `_archive/posts/` | 已下线的旧文章（不参与构建，留个底） | ✅ 可以翻看 |
 | `build.sh` | 云端构建脚本，负责下载正确版本的 Hugo | ❌ **别删，删了构建必挂** |
@@ -41,7 +41,7 @@ Hugo 会优先用站点自己的同名模板，所以这四个文件盖住了 Th
 | 文件 | 改了什么 | 主题升级时的注意 |
 |---|---|---|
 | `home_info.html` | 首页标题左边加头像 | 主题若改首页结构，需要重新对比 |
-| `extend_post_content.html` | 正文后加阅读量胶囊，并加载 `engage.js` | 不会冲突 |
+| `extend_post_content.html` | 正文后加阅读量与点赞胶囊，并加载 `engage.js` | 不会冲突 |
 | `comments.html` | 评论区（主题里本来是空的） | 不会冲突 |
 | `footer.html` | **整份副本**，只把署名里的 PaperMod 链接改成纯文本 | ⚠️ 升级主题后要重新拷一次，否则页脚脚本会旧 |
 
@@ -100,6 +100,9 @@ ShowToc: true              # 是否显示目录（长文建议 true）
 TocOpen: false
 ---
 ```
+
+**`date` 用写作日期，不要用上传日期。** 列表排序、页面上的日期、RSS 与 sitemap 都取这个字段；
+写晚了补传，日期就会被写成补传那天，读起来像时间错乱。`lastmod` 只在真正改过内容时才更新。
 
 ### 写作时的三条实用建议
 
@@ -236,10 +239,10 @@ https://www.bing.com/webmasters → 可以直接从 Google Search Console 导入
 
 Cloudflare 后台 → **Analytics & Logs → Web Analytics** → 添加站点 `holly-sunrise.pages.dev` → 拿到 token → 填进 `extend_head.html` 第 3 节（同样是注释状态）。免费、无 cookie，不需要加隐私弹窗。
 
-### 7.4 阅读量与评论区（需要做一次，5 分钟）
+### 7.4 阅读量、点赞与评论区（需要做一次，5 分钟）
 
-评论与阅读量是自建的：页面上是一段 JS，数据存在你自己 Cloudflare 账号下的 KV 里。
-**没做这一步之前，这两块会自动隐藏**——页面不会出现「0 次阅读」或空评论框，也不会报错。
+评论、阅读量、点赞都是自建的：页面上是一段 JS，数据存在你自己 Cloudflare 账号下的 KV 里。
+**没做这一步之前，这三块会自动隐藏**——页面不会出现「0 次阅读」或空评论框，也不会报错。
 
 **第 1 步：建 KV 命名空间**
 
@@ -261,10 +264,17 @@ Cloudflare 后台 → **Analytics & Logs → Web Analytics** → 添加站点 `h
 
 浏览器直接打开：
 `https://holly-sunrise.pages.dev/api/view?p=/posts/when-ai-finishes-the-work/`
+`https://holly-sunrise.pages.dev/api/like?p=/posts/when-ai-finishes-the-work/`
 
-- 看到 `{"ok":true,"count":0}` → 通了（count 会随着访问增长）
+- 看到 `{"ok":true,"count":0}` → 通了（count 会随着访问/点赞增长）
 - 看到 `{"ok":false,"error":"storage_unbound"}` → 绑定没生效，回到第 2 步核对变量名
 - 看到 404 → 仓库里 `functions/` 目录没推上去
+
+**点赞是怎么防刷的**
+
+- 同一 IP 对同一篇文章只记一次，标记存在 KV 里、一年后过期（键名里是 IP 的哈希，不留明文）
+- 浏览器本地再记一次状态：点过之后按钮变成实心红心并禁用，刷新也不会回到可点状态
+- 想给某篇清零：KV 里删掉 `l:/zh/posts/xxx/` 与所有 `li:/zh/posts/xxx/:*` 开头的键
 
 **评论区怎么管**
 

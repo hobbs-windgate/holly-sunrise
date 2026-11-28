@@ -1,7 +1,7 @@
 ---
 title: "When Cleverness Starts to Depreciate"
-date: 2026-11-26
-lastmod: 2026-11-26
+date: 2026-11-25
+lastmod: 2026-11-25
 draft: false
 translationKey: "when-cleverness-goes-cheap"
 slug: "when-cleverness-goes-cheap"

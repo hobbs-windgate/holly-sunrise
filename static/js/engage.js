@@ -1,5 +1,5 @@
-/* 阅读量 + 评论区前端逻辑
-   接口：/api/view  /api/comments  （Cloudflare Pages Functions，见 functions/api/[[path]].js）
+/* 阅读量 + 点赞 + 评论区前端逻辑
+   接口：/api/view  /api/like  /api/comments  （Cloudflare Pages Functions，见 functions/api/[[path]].js）
    设计要点：
    1. 全部用 textContent 渲染，评论按纯文本处理，不解析 HTML —— 从根上避免 XSS
    2. 接口失败就整块隐藏，页面上不会出现「0 次阅读」这种假数据
@@ -85,7 +85,14 @@
       .then(function (data) {
         if (!data || typeof data.count !== "number") return;
         box.textContent = num(data.count);
-        if (wrap) wrap.hidden = false;
+        if (wrap) {
+          wrap.hidden = false;
+          // 英文单复数：1 view / 2 views（中文「次阅读」不分单复数）
+          var label = wrap.querySelector("[data-hs-views-label]");
+          if (label && lang !== "zh") {
+            label.textContent = data.count === 1 ? "view" : "views";
+          }
+        }
         if (!seen) {
           try {
             sessionStorage.setItem(key, "1");
@@ -95,6 +102,62 @@
       .catch(function () {
         /* 未绑定 KV 或离线：保持隐藏 */
       });
+  }
+
+  /* ---------------- 点赞 ---------------- */
+
+  function initLikes() {
+    var btn = document.querySelector("[data-hs-like]");
+    if (!btn) return;
+
+    var countEl = btn.querySelector("[data-hs-like-count]");
+    var labelEl = btn.querySelector("[data-hs-like-label]");
+    var storeKey = "hs:l:" + page;
+    var liked = false;
+    try {
+      liked = localStorage.getItem(storeKey) === "1";
+    } catch (e) {}
+
+    function paint(count, isLiked) {
+      countEl.textContent = num(count);
+      if (labelEl) {
+        labelEl.textContent = lang === "zh" ? "赞" : count === 1 ? "like" : "likes";
+      }
+      btn.classList.toggle("is-liked", !!isLiked);
+      btn.setAttribute("aria-pressed", isLiked ? "true" : "false");
+      btn.disabled = !!isLiked;
+      btn.hidden = false;
+    }
+
+    api("/api/like?p=" + encodeURIComponent(page))
+      .then(function (data) {
+        if (!data || typeof data.count !== "number") return;
+        paint(data.count, liked);
+      })
+      .catch(function () {
+        /* 未绑定 KV 或离线：保持隐藏 */
+      });
+
+    btn.addEventListener("click", function () {
+      if (btn.disabled) return;
+      btn.disabled = true;
+
+      api("/api/like", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ p: page })
+      })
+        .then(function (data) {
+          var count = data && typeof data.count === "number" ? data.count : 0;
+          try {
+            localStorage.setItem(storeKey, "1");
+          } catch (e) {}
+          paint(count, true);
+        })
+        .catch(function () {
+          btn.disabled = false;
+        });
+    });
   }
 
   /* ---------------- 评论区 ---------------- */
@@ -207,5 +270,6 @@
   }
 
   initViews();
+  initLikes();
   initComments();
 })();

@@ -69,11 +69,16 @@
 /* 主题的 reset 对 section / p 设了 display，会盖掉浏览器默认的 [hidden]，
    导致 JS 判断接口不可用后元素仍然显示。这里显式兜一层。 */
 .hs-views[hidden],
+.hs-like[hidden],
 .hs-comments[hidden] {
   display: none !important;
 }
 
 .hs-engage {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
   margin: 26px 0 0;
 }
 
@@ -95,6 +100,87 @@
   height: 15px;
   flex: 0 0 auto;
   opacity: 0.8;
+}
+
+/* ---------------- 点赞 ---------------- */
+
+.hs-like {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 3px 12px 3px 9px;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--secondary);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.hs-like .hs-icon {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  opacity: 0.85;
+}
+
+.hs-like .hs-icon path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+
+.hs-like:hover:not(:disabled) {
+  color: #e0525f;
+  border-color: #e0525f;
+}
+
+.hs-like:focus-visible {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+}
+
+/* 已赞：实心红心，不可再点 */
+.hs-like.is-liked {
+  color: #e0525f;
+  border-color: rgba(224, 82, 95, 0.55);
+  background: rgba(224, 82, 95, 0.08);
+  cursor: default;
+}
+
+.hs-like.is-liked .hs-icon path {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+.hs-like.is-liked .hs-icon {
+  animation: hs-like-pop 0.34s ease;
+}
+
+@keyframes hs-like-pop {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.22); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hs-like.is-liked .hs-icon {
+    animation: none;
+  }
+}
+
+[data-theme="dark"] .hs-like:hover:not(:disabled),
+[data-theme="dark"] .hs-like.is-liked {
+  color: #ff8a94;
+  border-color: rgba(255, 138, 148, 0.5);
+}
+
+[data-theme="dark"] .hs-like.is-liked {
+  background: rgba(255, 138, 148, 0.1);
 }
 
 /* ---------------- 评论区 ---------------- */

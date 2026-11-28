@@ -1,13 +1,17 @@
-// Cloudflare Pages Functions —— 阅读量与评论区
+// Cloudflare Pages Functions —— 阅读量、点赞与评论区
 //
 // 路由（catch-all 到 /api/*）：
 //   GET  /api/view?p=/zh/posts/xxx/     读取阅读量
 //   POST /api/view   {p}                阅读量 +1，返回最新值
+//   GET  /api/like?p=/zh/posts/xxx/     读取点赞数
+//   POST /api/like   {p}                点赞 +1（同 IP 同文章只记一次）
 //   GET  /api/comments?p=/zh/posts/xxx/ 列出评论（按时间升序）
 //   POST /api/comments {p,name,body,hp} 发表评论
 //
 // 存储：KV 绑定名 BLOG_KV
-//   v:<path>              → 数字字符串
+//   v:<path>              → 数字字符串（阅读量）
+//   l:<path>              → 数字字符串（点赞数）
+//   li:<path>:<IP哈希>     → 已点赞标记（TTL 1 年）
 //   c:<path>:<13位时间戳>:<随机>  → {n,b,t}
 //   rl:<ip>               → 限流标记（TTL 60s）
 //
@@ -45,6 +49,7 @@ export async function onRequest(context) {
   }
 
   if (route === "view") return handleView(request, kv);
+  if (route === "like") return handleLike(request, kv);
   if (route === "comments") return handleComments(request, kv);
 
   return json({ ok: false, error: "not_found" }, 404);
@@ -78,6 +83,53 @@ async function handleView(request, kv) {
   }
 
   return json({ ok: false, error: "method_not_allowed" }, 405);
+}
+
+async function handleLike(request, kv) {
+  const url = new URL(request.url);
+  let page = normalizePath(url.searchParams.get("p"));
+
+  if (!page && request.method === "POST") {
+    try {
+      const body = await request.json();
+      page = normalizePath(body && body.p);
+    } catch (e) {
+      /* 落到下面的 400 */
+    }
+  }
+  if (!page) return json({ ok: false, error: "bad_path" }, 400);
+
+  const key = "l:" + page;
+  const current = parseInt(await kv.get(key), 10) || 0;
+
+  if (request.method === "GET") {
+    return json({ ok: true, count: current });
+  }
+  if (request.method !== "POST") {
+    return json({ ok: false, error: "method_not_allowed" }, 405);
+  }
+
+  // 同一 IP 对同一篇文章只记一次（一年）。键里存的是加盐哈希，不留原始 IP。
+  const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+  const flag = "li:" + page + ":" + shortHash(ip + "|hs-like");
+  if (await kv.get(flag)) {
+    return json({ ok: true, count: current, already: true });
+  }
+  await kv.put(flag, "1", { expirationTtl: 31536000 });
+
+  const next = current + 1;
+  await kv.put(key, String(next));
+  return json({ ok: true, count: next, already: false });
+}
+
+/** FNV-1a，只用于把 IP 变成稳定短标识，避免在 KV 里留明文 IP */
+function shortHash(str) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h.toString(36);
 }
 
 async function handleComments(request, kv) {
